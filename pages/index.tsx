@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Layout from '../components/layout'
 
 export const getServerSideProps = async () => {
-  const response = await fetch('http://localhost:3000/api/getMovies')
+  const response = await fetch(`${process.env.API_ORIGIN_DOMAIN}api/getMovies`)
   const { data } = await response.json()
   return {
     props: {

@@ -40,7 +40,7 @@ const Movie = (props: { movie: any }) => {
               <a
                 href={movie.homepage}
                 target="_blank"
-                className="flex items-center space-x-2  border-blue-300 bg-black p-2 pl-5 pr-5 text-lg text-white focus:border-4"
+                className="flex items-center space-x-2   bg-black p-2 pl-5 pr-5 text-lg text-white "
               >
                 <svg
                   className="h-6 w-6"
@@ -53,7 +53,7 @@ const Movie = (props: { movie: any }) => {
                 </svg>
                 <span>Movie Homepage</span>
               </a>
-              <button className='flex items-center space-x-2  border-blue-300 bg-black p-2 pl-5 pr-5 text-lg text-white focus:border-4' onClick={handleBookmark}>
+              <button className='flex items-center space-x-2   bg-black p-2 pl-5 pr-5 text-lg text-white ' onClick={handleBookmark}>
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path></svg>
               <span> Bookmark </span>
               </button>
