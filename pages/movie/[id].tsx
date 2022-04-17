@@ -1,11 +1,49 @@
 import axios from 'axios'
+import localforage from 'localforage'
+import { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 
 const Movie = (props: { movie: any }) => {
   const { movie } = props
+  const [bookmarkStatus, setBookMarkedStatus] = useState(false);
 
-  const handleBookmark = () => {
+  useEffect(()=>{
+    const setBookMarkOnInit = async () => {
+      const movies:any = await localforage.getItem('movies');
+      const filterMovie = movies.filter((data: any) => data.movie_id === movie.id);
+      console.log(filterMovie)
+      if(filterMovie.length  > 0){
+        setBookMarkedStatus(true)
+      }
+    }
+    setBookMarkOnInit()
+  },[])
+
+  const handleBookmark = async () => {
     console.log("store the data in localstorage")
+    const data = await localforage.getItem("movies");
+
+    const movieDataToStore = {
+      movie_id: movie.id,
+      title: movie.title,
+      thumbnail_image: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+      popularity: movie.popularity,
+      release_date: movie.release_date,
+      vote_average: movie.vote_average,
+    }
+    if(!data){
+      localforage.setItem("movies", [movieDataToStore])
+      setBookMarkedStatus(true)
+    }else{
+      const existingData:any = await localforage.getItem('movies');
+      const filteredData:any = existingData.filter((data: { movie_id: any }) => movie.id === data.movie_id);
+      console.log("movie exists" ,filteredData)
+      if(filteredData.length === 0){
+        // movie does not exists in the indexDB 
+        localforage.setItem("movies", [...existingData, movieDataToStore])
+        setBookMarkedStatus(!bookmarkStatus)
+      }
+    }
   }
 
 
@@ -55,7 +93,7 @@ const Movie = (props: { movie: any }) => {
               </a>
               <button className='flex items-center space-x-2   bg-black p-2 pl-5 pr-5 text-lg text-white ' onClick={handleBookmark}>
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path></svg>
-              <span> Bookmark </span>
+              <span> {bookmarkStatus ? "Bookmarked" : "Bookmark"} </span>
               </button>
             </div>
           </div>
