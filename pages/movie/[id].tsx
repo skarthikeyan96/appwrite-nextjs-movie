@@ -50,31 +50,31 @@ const Movie = (props: { movie: any }) => {
   return (
     <>
       <Layout>
-        <div className="flex space-x-8">
+        <div className="flex flex-col space-y-8 items-center lg:items-start lg:flex-row lg:space-x-8 lg:space-y-0">
           <img
             src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-            className="w-1/4"
+            className="w-2/3 lg:w-1/4"
           />
           <div className="flex flex-col justify-items-start space-y-12">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold"> {movie.title} </h1>
-              <div className="flex flex-shrink-0 items-center space-x-2 pr-2 text-sm">
+            <div className="flex flex-col  items-center justify-between space-y-2 lg:space-y-4 lg:items-start">
+              <h1 className="text-2xl font-bold text-center lg:text-left"> {movie.title} </h1>
+              <div className="flex flex-shrink-1 items-center  pr-2 text-sm space-x-2">
                 <div className="rounded-r bg-green-200 px-2 py-1 text-green-700">
                   <p> {movie.status} </p>
                 </div>
                 {movie.genres.map((genre: any) => {
                   return (
-                    <div className="rounded-r bg-green-200 px-2 py-1 text-green-700">
+                    <div className="rounded-r bg-green-200 px-2 py-1 text-green-700 whitespace-nowrap">
                       <p> {genre.name} </p>
                     </div>
                   )
                 })}
               </div>
             </div>
-            <div>
+            <div className='text-center md:text-justify'>
               <p> {movie.overview} </p>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
               <a
                 href={movie.homepage}
                 target="_blank"

@@ -1,25 +1,45 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import Layout from '../components/layout'
+import Pagination from '../components/pagination'
 
-export const getServerSideProps = async () => {
-  const response = await fetch(`${process.env.API_ORIGIN_DOMAIN}api/getMovies`)
-  const { data } = await response.json()
-  return {
-    props: {
-      movies: data.documents,
-    },
+
+const Home: NextPage = () => {
+  
+  const [offset, setOffset] = useState(0);
+  const [pageLimit] = useState(25)
+  const [totalPageCount, setTotalPageCount] = useState(0)
+
+  const fetchMovies = async (limit: any,offset: any) =>{
+    const response = await fetch(`/api/getMovies?limit=${limit}&offset=${offset}`)
+    const data = await response.json()
+    setMovies(data.data.documents)
+    setTotalPageCount(data.count)
   }
-}
-const Home: NextPage = (props: any) => {
-  const { movies } = props
+
+  useEffect(()=>{
+    fetchMovies(pageLimit, offset)
+  },[offset])
+
+  const handleNextPage =  () => {
+    setOffset((prevOffset) => prevOffset + pageLimit)
+  }
+
+  const handlePreviousPage = () => {
+   if(offset > 0 ){
+    setOffset((prevOffset) => {
+      return prevOffset - pageLimit
+    })
+   } 
+  }
+  const [movies, setMovies] = useState([])
 
   return (
     <Layout>
-      <section className="body-font text-gray-600">
+      <section className="body-font text-gray-600 pb-4">
         <div className="mt-6 grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-20">
           {movies.map((movie: any) => {
-            console.log(movie)
             return (
               <a className="cursor-pointer">
                 <Link href={`/movie/${movie.movie_id}`}>
@@ -52,6 +72,14 @@ const Home: NextPage = (props: any) => {
           })}
         </div>
       </section>
+      <Pagination 
+        totalMovies={totalPageCount}
+        postPerPage={pageLimit}
+        nextOffset={offset + pageLimit}
+        currentPage={0}
+        handleNextPage={handleNextPage}
+        handlePreviousPage={handlePreviousPage}
+      />
     </Layout>
   )
 }

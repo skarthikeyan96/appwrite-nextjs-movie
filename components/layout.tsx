@@ -15,7 +15,7 @@ const Layout = ({ children }: any) => {
               <Link href="/add">Add Movie</Link>
             </span>
             <span className="mr-5 hover:text-gray-900">
-              <Link href="/bookmark">Bookmarked Movies</Link>
+              <Link href="/bookmark">Bookmarks</Link>
             </span>
           </nav>
         </div>

@@ -21,7 +21,6 @@ const BookMark = () => {
         <div className="mt-6 grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-20">
        
             {bookmarkedMovies.map((movie: any) => {
-            console.log(movie)
             return (
               <a className="cursor-pointer">
                 <Link href={`/movie/${movie.movie_id}`}>

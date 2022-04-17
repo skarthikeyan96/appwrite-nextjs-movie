@@ -11,8 +11,13 @@ export default async function handler(
     try{
         let sdk = initAppwrite();
         let database = new Appwrite.Database(sdk)
-        let promise = await database.listDocuments(process.env.APPWRITE_COLLECTION_ID as string)
-        res.status(200).json({ data: promise })
+        
+        const limit:any = req.query.limit;
+        const offset:any = req.query.offset;
+
+        let response = await database.listDocuments(process.env.APPWRITE_COLLECTION_ID as string, [],limit, offset)
+        console.log(response.total)
+        res.status(200).json({ data: response, count: response.total })
       
     }catch(e){
         res.status(500).json({data: e})
