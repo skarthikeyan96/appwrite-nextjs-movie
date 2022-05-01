@@ -8,7 +8,7 @@ const Add = () => {
   const handleAddMovie = async () => {
     try {
       const response = await fetch(
-        `${process.env.API_ORIGIN_DOMAIN}api/addMovie?imdbID=${id}`
+        `/api/addMovie?imdbID=${id}`
       )
       const data = await response.json()
       if (response.status === 200 && data.id) {

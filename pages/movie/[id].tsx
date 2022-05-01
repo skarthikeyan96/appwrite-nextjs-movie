@@ -10,11 +10,14 @@ const Movie = (props: { movie: any }) => {
   useEffect(()=>{
     const setBookMarkOnInit = async () => {
       const movies:any = await localforage.getItem('movies');
-      const filterMovie = movies.filter((data: any) => data.movie_id === movie.id);
-      console.log(filterMovie)
-      if(filterMovie.length  > 0){
-        setBookMarkedStatus(true)
+      if(movies && movies.length === 0){
+        const filterMovie = movies.filter((data: any) => data.movie_id === movie.id);
+        console.log(filterMovie)
+        if(filterMovie.length  > 0){
+          setBookMarkedStatus(true)
+        }
       }
+     
     }
     setBookMarkOnInit()
   },[])

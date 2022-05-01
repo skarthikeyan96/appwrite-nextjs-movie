@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { initAppwrite } from '../../lib/appwrite'
 
 type Data = {
-  data: any
+  data: string
 }
 
 export default async function handler(
